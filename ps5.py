@@ -138,7 +138,7 @@ def test_is_word_in():
 class TitleTrigger(WordTrigger):
     def __init__(self, word):
         WordTrigger.__init__(self, word)
-        self.word = word
+        #self.word = word
 
     def evaluate(self, story):
         title = story.get_title()
@@ -154,10 +154,30 @@ class TitleTrigger(WordTrigger):
 """    
     
 # TODO: SubjectTrigger
+
+class SubjectTrigger(WordTrigger):
+    def __init__(self, word):
+        WordTrigger.__init__(self, word)
+        #self.word = word
+
+    def evaluate(self, story):
+        subject = story.get_subject()
+        return self.is_word_in(subject)
+
 # TODO: SummaryTrigger
 
+class SummaryTrigger(WordTrigger):
+    def __init__(self, word):
+        WordTrigger.__init__(self, word)
+
+    def evaluate(self, story):
+        summary = story.get_summary()
+        return self.is_word_in(summary)
 
 # Composite Triggers
+
+    
+
 # Problems 6-8
 
 # TODO: NotTrigger
