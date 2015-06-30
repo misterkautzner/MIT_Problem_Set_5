@@ -2,7 +2,7 @@
 #
 # Name: John Kautzner
 # Collaborators: None
-# Time: 2:00
+# Time: 4:00
 #
 # RSS Feed Filter
 #
@@ -89,6 +89,7 @@ class Trigger(object):
         Returns True if an alert should be generated
         for the given news item, or False otherwise.
         """
+        print "Trigger's evaluate"
         raise NotImplementedError
 
 # Whole Word Triggers
@@ -105,7 +106,7 @@ class WordTrigger(Trigger):
         thisWord = ''
         for c in text:
             if c == ' ' or c in string.punctuation:
-                if(thisWord == self.word):
+                if(thisWord == self.word.lower()):
                     return True
 
                 thisWord = ''
@@ -137,7 +138,11 @@ def test_is_word_in():
 class TitleTrigger(WordTrigger):
     def __init__(self, word):
         WordTrigger.__init__(self, word)
+        self.word = word
 
+    def evaluate(self, story):
+        title = story.get_title()
+        return self.is_word_in(title)
         
 """
     def word_in_title():
