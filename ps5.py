@@ -134,7 +134,20 @@ def test_is_word_in():
 
 # TODO: TitleTrigger
 
+class TitleTrigger(WordTrigger):
+    def __init__(self, word):
+        WordTrigger.__init__(self, word)
 
+        
+"""
+    def word_in_title():
+        title = self.get_title()
+        if(word.is_word_in(title):
+           return word, "is in title"
+
+        return None
+"""    
+    
 # TODO: SubjectTrigger
 # TODO: SummaryTrigger
 
