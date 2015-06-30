@@ -2,7 +2,7 @@
 #
 # Name: John Kautzner
 # Collaborators: None
-# Time: 4:00
+# Time: 5:00
 #
 # RSS Feed Filter
 #
@@ -116,22 +116,24 @@ class WordTrigger(Trigger):
         
         return False
 
-def test_is_word_in():
-    t = 'Koala bears are soft and cuddly.'
-    q = 'I prefer pillows that are soft.'
-    r = 'Soft drinks are great.'
-    s = "Soft's the new pink!"
-    p = '"Soft!" he exclaimed as he threw the football.'
-    u = "Microsoft announced today that pillows are bad."
-    v = "I softly ran."
+##def test_is_word_in():
+##    t = 'Koala bears are soft and cuddly.'
+##    q = 'I prefer pillows that are soft.'
+##    r = 'Soft drinks are great.'
+##    s = "Soft's the new pink!"
+##    p = '"Soft!" he exclaimed as he threw the football.'
+##    u = "Microsoft announced today that pillows are bad."
+##    v = "I softly ran."
+##
+##    soft = WordTrigger('soft')
+##
+##    for i in [p, q, r, s, t, u, v]:
+##        print i, "       ", soft.is_word_in(i)
+##            
+##    print
+##    return "Completed"
 
-    soft = WordTrigger('soft')
-
-    for i in [p, q, r, s, t, u, v]:
-        print i, "       ", soft.is_word_in(i)
-            
-    print
-    return "Completed"
+    
 
 # TODO: TitleTrigger
 
@@ -168,19 +170,27 @@ class SubjectTrigger(WordTrigger):
 
 class SummaryTrigger(WordTrigger):
     def __init__(self, word):
-        WordTrigger.__init__(self, word)
+        #WordTrigger.__init__(self, word)
+        self.word = word
 
     def evaluate(self, story):
         summary = story.get_summary()
         return self.is_word_in(summary)
 
-# Composite Triggers
-
-    
+# Composite Triggers    
 
 # Problems 6-8
 
 # TODO: NotTrigger
+
+class NotTrigger(Trigger):
+    def __init__(self, trigger):
+        self.trigger = trigger
+
+    def evaluate(self, newsItem):
+        return not self.trigger.evaluate(newsItem)
+        
+
 # TODO: AndTrigger
 # TODO: OrTrigger
 
