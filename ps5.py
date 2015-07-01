@@ -2,7 +2,7 @@
 #
 # Name: John Kautzner
 # Collaborators: None
-# Time: 6:30
+# Time: 7:00
 #
 # RSS Feed Filter
 #
@@ -247,7 +247,15 @@ def filter_stories(stories, triggerlist):
     # TODO: Problem 10
     # This is a placeholder (we're just returning all the stories, with no filtering) 
     # Feel free to change this line!
-    return stories
+    triggeredStories = []
+    
+    for story in stories:
+        for trigger in triggerlist:
+            if(trigger.evaluate(story)):
+                triggeredStories.append(story)
+                break
+
+    return triggeredStories
 
 #======================
 # Part 4
