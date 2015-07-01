@@ -192,13 +192,46 @@ class NotTrigger(Trigger):
         
 
 # TODO: AndTrigger
+
+class AndTrigger(Trigger):
+    def __init__(self, trig1, trig2):
+        self.trig1 = trig1
+        self.trig2 = trig2
+
+    def evaluate(self, newsItem):
+        return self.trig1.evaluate(newsItem) and self.trig2.evaluate(newsItem)
+
 # TODO: OrTrigger
 
+class OrTrigger(Trigger):
+    def __init__(self, trig1, trig2):
+        self.trig1 = trig1
+        self.trig2 = trig2
+
+    def evaluate(self, newsItem):
+        return self.trig1.evaluate(newsItem) or self.trig2.evaluate(newsItem)  
 
 # Phrase Trigger
 # Question 9
 
 # TODO: PhraseTrigger
+
+class PhraseTrigger(Trigger):
+    def __init__(self, phrase):
+        Trigger.__init__(self)
+        print "knitted"
+        self.phrase = phrase
+##        self.title = newsItem.get_title()
+##        self.subject = newsItem.get_subject()
+##        self.summary = newsItem.get_summary()
+
+    def is_phrase_in(self, text):
+        if self.word in text:
+            return True
+        return False
+
+    def evaluate(self):
+        return self.word.is_phrase_in(self.title) or self.word.is_phrase_in(self.subject) or self.word.is_phrase_in(self.summary)
 
 
 #======================
