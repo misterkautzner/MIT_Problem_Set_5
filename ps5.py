@@ -2,7 +2,7 @@
 #
 # Name: John Kautzner
 # Collaborators: None
-# Time: 7:00
+# Time: 8:00
 #
 # RSS Feed Filter
 #
@@ -283,6 +283,35 @@ def readTriggerConfig(filename):
     # 'lines' has a list of lines you need to parse
     # Build a set of triggers from it and
     # return the appropriate ones
+
+    nameDict = {}
+
+    for l in lines:
+        if(l[0] == 'A' and l[1] == 'D' and l[2] == 'D'):
+            #Do what Adding does
+            print "Nothing to see here."
+
+        else:
+            count = 0
+            name = ''
+            for char in l:
+                if char != ' ':
+                    count += 1
+                    name += char
+                else:
+                    break
+
+            for l
+            #I need to set up a dictionary with name as the key and...
+            #I could use count (above) to keep track of where we are in
+            #the line and feed that into a method.
+            #Or I could read in all of the words from a line (letter by letter)
+            #and then act based on the words...
+                
+            print "Dictating"
+            #nameDict[name] = 
+
+
     
 import thread
 
@@ -297,7 +326,7 @@ def main_thread(p):
     
     # TODO: Problem 11
     # After implementing readTriggerConfig, uncomment this line 
-    #triggerlist = readTriggerConfig("triggers.txt")
+    triggerlist = readTriggerConfig("triggers.txt")
 
     guidShown = []
     
