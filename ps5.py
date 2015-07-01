@@ -2,7 +2,7 @@
 #
 # Name: John Kautzner
 # Collaborators: None
-# Time: 5:00
+# Time: 6:30
 #
 # RSS Feed Filter
 #
@@ -219,19 +219,18 @@ class OrTrigger(Trigger):
 class PhraseTrigger(Trigger):
     def __init__(self, phrase):
         Trigger.__init__(self)
-        print "knitted"
         self.phrase = phrase
-##        self.title = newsItem.get_title()
-##        self.subject = newsItem.get_subject()
-##        self.summary = newsItem.get_summary()
 
     def is_phrase_in(self, text):
-        if self.word in text:
+        if self.phrase in text:
             return True
         return False
 
-    def evaluate(self):
-        return self.word.is_phrase_in(self.title) or self.word.is_phrase_in(self.subject) or self.word.is_phrase_in(self.summary)
+    def evaluate(self, newsItem):
+        title = newsItem.get_title()
+        subject = newsItem.get_subject()
+        summary = newsItem.get_summary()
+        return self.is_phrase_in(title) or self.is_phrase_in(subject) or self.is_phrase_in(summary)
 
 
 #======================
