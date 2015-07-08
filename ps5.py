@@ -295,25 +295,24 @@ def readTriggerConfig(filename):
         words = [] # List of all words in a line
         #count = 0
         name = '' # Whatever word in the line is being assembled.
-
-        print "On line ", l
         
         for char in l:
             if char != ' ':
                 #count += 1
                 name += char
-                print "name = ", name
             else:
                 words += [name]
-                print name
                 name = ''
         words += [name]
 
-        print words
+        print "words = ", words
 
         if(words[0] == 'ADD'):
             for i in range(1, len(words)):
-                Trigset += words[i]
+                print "i = ", i
+                print "words[i] = ", words[i]
+                TrigSet += [words[i]]
+                print "TrigSet =", TrigSet
                 
 
         else:
@@ -349,10 +348,12 @@ def readTriggerConfig(filename):
                 
             print "Dictating"
             
+    print TrigSet
+            
     for trigger in TrigSet:
         print "Printing Trigs"
         print trigs[trigger]
-        
+    #return TrigSet 
 
     
 import thread
