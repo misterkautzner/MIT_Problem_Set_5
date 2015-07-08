@@ -2,7 +2,7 @@
 #
 # Name: John Kautzner
 # Collaborators: None
-# Time: 8:00
+# Time: 9:00
 #
 # RSS Feed Filter
 #
@@ -284,33 +284,64 @@ def readTriggerConfig(filename):
     # Build a set of triggers from it and
     # return the appropriate ones
 
-    nameDict = {}
+    trigs = {}
+    TrigSet = []
 
     for l in lines:
-        if(l[0] == 'A' and l[1] == 'D' and l[2] == 'D'):
-            #Do what Adding does
-            print "Nothing to see here."
+        words = [] # List of all words in a line
+        #count = 0
+        name = '' # Whatever word in the line is being assembled.
+        
+        for char in l:
+            if char != ' ':
+                #count += 1
+                name += char
+            else:
+                words += [name]
+                name = ''
+
+        if(words[0] == 'ADD'):
+            for i in range(1, len(words)):
+                Trigset += words[i]
+                
 
         else:
-            count = 0
-            name = ''
-            for char in l:
-                if char != ' ':
-                    count += 1
-                    name += char
-                else:
-                    break
+            if(words[1] == 'TITLE'):
+                trigs[words[0]] = TitleTrigger(words[2])
 
-            for l
-            #I need to set up a dictionary with name as the key and...
-            #I could use count (above) to keep track of where we are in
-            #the line and feed that into a method.
-            #Or I could read in all of the words from a line (letter by letter)
-            #and then act based on the words...
+            elif(words[1] == 'SUBJECT'):
+                trigs[words[0]] = SubjectTrigger(words[2])
+
+            elif(words[1] == 'SUMMARY'):
+                trigs[words[0]] = SummaryTrigger(words[2])
+
+            elif(words[1] == 'NOT'):
+                trigs[words[0]] = NotTrigger(words[2])
+
+            elif(words[1] == 'AND'):
+                trigs[words[0]] = AndTrigger(words[2], words[3])
+
+            elif(words[1] == 'OR'):
+                trigs[words[0]] = OrTrigger(words[2], words[3])
+
+            elif(words[1] == 'PHRASE'):
+                phrase = ''
+                for word in range(2, len(words)):
+                    phrase += words[word]
+                    if(word != len(words)):
+                        phrase += ' '
+
+                trigs[words[0]] = PhraseTrigger(phrase)
+
+            else:
+                print "Trigger type is undefined"
                 
             print "Dictating"
-            #nameDict[name] = 
-
+            
+    for trigger in TrigSet:
+        print "Printing Trigs"
+        print trigs[trigger]
+        
 
     
 import thread
