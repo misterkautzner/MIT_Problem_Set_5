@@ -271,6 +271,8 @@ def readTriggerConfig(filename):
     # Here's some code that we give you
     # to read in the file and eliminate
     # blank lines and comments
+    print "Starting readTriggerConfig"
+    
     triggerfile = open(filename, "r")
     all = [ line.rstrip() for line in triggerfile.readlines() ]
     lines = []
@@ -284,6 +286,8 @@ def readTriggerConfig(filename):
     # Build a set of triggers from it and
     # return the appropriate ones
 
+    print "Jars"
+
     trigs = {}
     TrigSet = []
 
@@ -291,14 +295,21 @@ def readTriggerConfig(filename):
         words = [] # List of all words in a line
         #count = 0
         name = '' # Whatever word in the line is being assembled.
+
+        print "On line ", l
         
         for char in l:
             if char != ' ':
                 #count += 1
                 name += char
+                print "name = ", name
             else:
                 words += [name]
+                print name
                 name = ''
+        words += [name]
+
+        print words
 
         if(words[0] == 'ADD'):
             for i in range(1, len(words)):
@@ -384,11 +395,11 @@ def main_thread(p):
 
         print "Sleeping..."
         time.sleep(SLEEPTIME)
-"""
+
 SLEEPTIME = 60 #seconds -- how often we poll
 if __name__ == '__main__':
     p = Popup()
     thread.start_new_thread(main_thread, (p,))
     p.start()
 
-"""
+
