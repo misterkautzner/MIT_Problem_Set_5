@@ -1,8 +1,8 @@
 # 6.00 Problem Set 5
 #
 # Name: John Kautzner
-# Collaborators: None
-# Time: 9:00
+# Collaborators: A little help debugging from Tony Howell
+# Time: 10:00
 #
 # RSS Feed Filter
 #
@@ -89,7 +89,6 @@ class Trigger(object):
         Returns True if an alert should be generated
         for the given news item, or False otherwise.
         """
-        print "Trigger's evaluate"
         raise NotImplementedError
 
 # Whole Word Triggers
@@ -151,7 +150,6 @@ class TitleTrigger(WordTrigger):
         title = self.get_title()
         if(word.is_word_in(title):
            return word, "is in title"
-
         return None
 """    
     
@@ -271,8 +269,7 @@ def readTriggerConfig(filename):
     # Here's some code that we give you
     # to read in the file and eliminate
     # blank lines and comments
-    print "Starting readTriggerConfig"
-    
+
     triggerfile = open(filename, "r")
     all = [ line.rstrip() for line in triggerfile.readlines() ]
     lines = []
@@ -285,8 +282,6 @@ def readTriggerConfig(filename):
     # 'lines' has a list of lines you need to parse
     # Build a set of triggers from it and
     # return the appropriate ones
-
-    print "Jars"
 
     trigs = {}
     TrigSet = []
@@ -305,14 +300,10 @@ def readTriggerConfig(filename):
                 name = ''
         words += [name]
 
-        print "words = ", words
 
         if(words[0] == 'ADD'):
             for i in range(1, len(words)):
-                print "i = ", i
-                print "words[i] = ", words[i]
                 TrigSet += [words[i]]
-                print "TrigSet =", TrigSet
                 
 
         else:
@@ -329,10 +320,10 @@ def readTriggerConfig(filename):
                 trigs[words[0]] = NotTrigger(words[2])
 
             elif(words[1] == 'AND'):
-                trigs[words[0]] = AndTrigger(words[2], words[3])
+                trigs[words[0]] = AndTrigger(trigs[words[2]], trigs[words[3]])
 
             elif(words[1] == 'OR'):
-                trigs[words[0]] = OrTrigger(words[2], words[3])
+                trigs[words[0]] = OrTrigger(trigs[words[2]], trigs[words[3]])
 
             elif(words[1] == 'PHRASE'):
                 phrase = ''
@@ -345,15 +336,13 @@ def readTriggerConfig(filename):
 
             else:
                 print "Trigger type is undefined"
-                
-            print "Dictating"
+
+
+    actualTriggers = []
+    for t in TrigSet:
+        actualTriggers += [trigs[t]]
             
-    print TrigSet
-            
-    for trigger in TrigSet:
-        print "Printing Trigs"
-        print trigs[trigger]
-    #return TrigSet 
+    return actualTriggers
 
     
 import thread
@@ -392,6 +381,7 @@ def main_thread(p):
         
         for story in newstories:
             guidShown.append(story.get_guid())
+            print story.get_title()
             p.newWindow(story)
 
         print "Sleeping..."
@@ -402,5 +392,3 @@ if __name__ == '__main__':
     p = Popup()
     thread.start_new_thread(main_thread, (p,))
     p.start()
-
-
